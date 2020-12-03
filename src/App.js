@@ -1,36 +1,38 @@
 import React from 'react';
+import ReactDOM from "react-dom";
+
 import TodoForm from "./components/TodoForm";
 import TodoList from "./components/TodoList";
 import "./components/Todo.css";
 
 const todos =[
   {
-    text:"Create a Todo list",
+    name:"Create a Todo list",
     id:1,
     completed:false
   },
   {
-    text:"Submit to github",
+    name:"Submit to github",
     id:2,
     completed:false
   },
   {
-    text: "Merge Pull Request",
+    name: "Merge Pull Request",
     id:3,
     completed:false
   },
   {
-    text:"Talk to Mentor/Mentee",
+    name:"Talk to Mentor/Mentee",
     id:4,
     completed:false
   },
   {
-    text:"Watch tomorrow's module lesson",
+    name:"Watch tomorrow's module lesson",
     id:5,
     completed:false
   },
   {
-    text:"Workout",
+    name:"Workout",
     id:6,
     completed:false
   }
@@ -89,16 +91,20 @@ class App extends React.Component {
     return (
       <div className="App">
         <div className = "header">
-        <h2>Welcome to your Todo App!</h2>
-        <TodoForm/>
+        <h1>Welcome to your Todo App!</h1>
+        <TodoForm addItem = {this.addItem}/>
         <TodoList 
         todos={this.state.todos}
         toggleItem={this.toggleItem}
+        clearCompleted={this.clearCompleted}
         />
         </div>
       </div>
     );
   }
 }
+const rootElement = document.getElementById("root");
+ReactDOM.render(<App />, rootElement);
+
 
 export default App;
