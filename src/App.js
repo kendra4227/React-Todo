@@ -1,5 +1,7 @@
 import React from 'react';
 import TodoForm from "./components/TodoForm";
+import TodoList from "./components/TodoList";
+import "./components/Todo.css";
 
 const todos =[
   {
@@ -44,13 +46,55 @@ class App extends React.Component {
       todos
     };
   }
- 
+  addItem = (e,item)=>{
+    console.log("adding item");
+    e.preventDefault();
+    const newItem ={
+      name:item,
+      completed:false,
+      id:Date.now()
+    };
+    this.setState({
+      ...this.state,
+      todos: [...this.state.todos, newItem]
+    });
+  };
+  // Class methods to update state
+  toggleItem = (itemId) =>{
+    console.log("toggling item", itemId);
+    this.setState({
+      ...this.state,
+      todos: this.state.todos.map((item)=>{
+        if (itemId === item.id){
+          return {
+            ...item,
+            completed: !item.completed
+          };
+        }else{
+          return item;
+        }
+      })
+    });
+  };
+
+    clearCompleted = (e) => {
+      e.preventDefault();
+      this.setState({
+        ...this.state,
+        todos: this.state.todos.filter((item) => !item.completed)
+      });
+    };
+  
   render() {
     return (
       <div className="App">
         <div className = "header">
         <h2>Welcome to your Todo App!</h2>
         <TodoForm/>
+        <TodoList 
+        todos={this.state.todos}
+        toggleItem={this.toggleItem}
+        />
         </div>
       </div>
     );
